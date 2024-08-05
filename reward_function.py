@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+#MUDR24-304-base
+#MUDR24-304-EC-2 
+
 close_to_inner_line = 0.90
 racing_line_smoothing_steps = 1 
 
@@ -13,12 +16,12 @@ maximum_steps_to_decay_penalty = 10    # less than equal 0 disables off track pa
 maximum_steps_to_progress_ratio = 1.8   # desired max steps to be taken for 1% of progress
 racing_line_free_zone_tolerance = 0.10
 racing_line_safe_zone_tolerance = 0.25
-distance_cover_sensitivity = 3.00  # higher number gives more freedom on the track, can cause zig-zags
-speed_action_sensitivity = 3.00  # higher number increases penalty for low speed
-steering_action_sensitivity = 2.00  # lower number accelerates penalty increase for not following track direction
+distance_cover_sensitivity = 3.00  # greater value, greater agility on the track (may cause zig-zags)
+speed_action_sensitivity = 3.00  # greater value increases penalty for low speed
+steering_action_sensitivity = 2.00  # lower number increase penalty for not following track direction
 total_off_track_penalty = 0.999999  # maximum penalty in percentage of total reward for being off track
 total_bad_speed_penalty = 0.500000  # maximum penalty in percentage of total reward for being off track
-total_bad_steering_penalty = 0.35  # maximum penalty in percentage of total reward for off directional steering
+total_bad_steering_penalty = 0.35  # maximum penalty in percentage of total reward for off direction steering
 
 reward_weight_for_progrress = 35
 reward_weight_for_speed = 25
