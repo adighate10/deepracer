@@ -73,6 +73,15 @@ def get_race_line(center_line, max_offset, pp=0.10, p=0.05, c=0.70, n=0.05, nn=0
 
 def calc_direction_angle(prev_point, next_point):
     return math.degrees(math.atan2(next_point[1] - prev_point[1], next_point[0] - prev_point[0]))
+
+def calc_direction_diff(steering, heading, track_direction):
+    # Calculate the difference between the track direction and the heading direction of the car
+    direction_diff = steering + heading - track_direction
+    if direction_diff > 180.0:
+        direction_diff = direction_diff - 360.0
+    if direction_diff < -180.0:
+        direction_diff = direction_diff + 360.0
+    return abs(direction_diff)
     
 def calc_distance_from_line(curr_point, prev_point, next_point):
     distance_cp_to_pp = calc_distance(curr_point, prev_point)  # b
