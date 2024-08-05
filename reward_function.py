@@ -11,6 +11,7 @@ racing_line_smoothing_steps = 1
 
 minimum_speed = 2.1
 maximum_speed = 4.0
+maximum_direction_difference = 30.0
 
 maximum_steps_to_decay_penalty = 10    # less than equal 0 disables off track panelty
 maximum_steps_to_progress_ratio = 1.8   # desired max steps to be taken for 1% of progress
@@ -125,14 +126,14 @@ def reward_function(params):
     heading = params['heading']
     steering = params['steering_angle']
     direction_diff_ratio = (
-            0.20 * min((calc_direction_diff(steering, heading, track_direction_1) / MAX_DIRECTION_DIFF), 1.00) +
-            0.30 * min((calc_direction_diff(steering, heading, track_direction_2) / MAX_DIRECTION_DIFF), 1.00) +
-            0.50 * min((calc_direction_diff(steering, heading, track_direction_3) / MAX_DIRECTION_DIFF), 1.00))
+            0.20 * min((calc_direction_diff(steering, heading, track_direction_1) / maximum_direction_difference), 1.00) +
+            0.30 * min((calc_direction_diff(steering, heading, track_direction_2) / maximum_direction_difference), 1.00) +
+            0.50 * min((calc_direction_diff(steering, heading, track_direction_3) / maximum_direction_difference), 1.00))
     dir_steering_ratio = 1.0 - pow(direction_diff_ratio, steering_action_sensitivity)
     reward_dir_steering = reward_weight_for_steering * dir_steering_ratio
 
     speed = params['speed']
-    expect_speed_ratio = 1.0 - min(abs(track_direction_1 - track_direction_3), MAX_DIRECTION_DIFF) / MAX_DIRECTION_DIFF
+    expect_speed_ratio = 1.0 - min(abs(track_direction_1 - track_direction_3), maximum_direction_difference) / maximum_direction_difference
     actual_speed_ratio = max(min(speed - minimum_speed, 0), maximum_speed - minimum_speed) / (maximum_speed - minimum_speed)
     speed_ratio = 1.0 - abs(expect_speed_ratio - actual_speed_ratio)
     reward_exp_speed = reward_weight_for_speed * pow(speed_ratio, speed_action_sensitivity)
